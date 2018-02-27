@@ -16,3 +16,4 @@ variable1=valuevariable2=value
 Bamboo will then allow each variable to be accessed using the bamboo.inject. prefix followed by the key name. e.g. bamboo.inject.variable1
 
 Note: This plugin is bundled with Bamboo 5.7 and later. The plugin version published here is meant to be used only with older versions of Bamboo.
+
