@@ -1,0 +1,52 @@
+
+
+ahachete 1 day ago [-]
+
+My bet is that it is built on top of Aurora PostgreSQL. By looking at the "Limits" section (https://docs.aws.amazon.com/documentdb/latest/developerguide...), identifiers are limited to 63 characters and the same characters that PostgreSQL limits identifiers to; and a collection size limit of 32TB, coincidentally maximum PostgreSQL table size.
+
+Edit: I can confirm: does not allow the UTF-8 null character in strings: https://docs.aws.amazon.com/documentdb/latest/developerguide... ... It is written on top of PostgreSQL.
+
+reply
+
+
+talawahdotnet 1 day ago [-]
+
+It sounds like it is built on top of the Aurora storage subsystem that is used by both Aurora MySQl and Aurora Postgres[1].
+
+I kinda expected them to build it on top of DynamoDb's backend and provide the same kind of "Serverless" on demand experience, but I guess the architecture didn't fit, or maybe this was just faster.
+
+1. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide...
+
+reply
+
+
+mrep 1 day ago [-]
+
+Definitely because it was faster. Amazon's strategy is to launch new features ASAP and then rely on everyone having to be on-call to fix shit when it inevitably breaks in prod because they rushed to launch. I will admit that while their "operational excellence" is shit, the security engineers do have quite a bit of power to block launches so their security isn't as bad as the reliability.
+
+However, the fact that writes aren't horizontally scalable makes it a laughable nosql database but it probably satisfies the checkmark for enough of their enterprise customers that it will be a mild success and they'll keep it on life support like simpledb forever until they implement a proper solution assuming there is enough demand for it.
+
+reply
+
+
+senderista 1 day ago [-]
+
+I was there for the launch of a major AWS service where they had an entire separate team working on the next iteration since well before launch (because the initial design wasn’t even intended to be sustainable). They are happy to incur technical risk (and in this case, to eat major losses in hardware costs) in order to be first to market.
+
+reply
+
+
+Corrado 22 hours ago [-]
+
+We used MongoDB in my last job and I just want to say that I would have given up management of that beast in a heartbeat. We didn't stress MongoDB nearly enough to warrant all the effort required to construct it, monitor it, back it up, etc. Even if the performance was crappy, I would have lobbied hard to change to DocumentDB ASAP.
+
+reply
+
+
+halbritt 16 hours ago [-]
+
+While I don't love MongoDB, I don't find it to be especially difficult to run. I'm running ~200 instances of MongoDB with a small team and it consumes very little of my attention.
+
+ElasticSearch on the other hand...
+
+reply
