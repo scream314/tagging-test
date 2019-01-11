@@ -1,0 +1,28 @@
+In git, the tag points to the specific commit object. If you've actually done a git pull --rebase then your graphs looks like this:
+```
+A-B-C-D
+
+A-F-B'-G-C'-D'
+```
+The actual commit objects depend on state of the tree and parentage, so even if the diff from C to D is the exact same as the diff between C' and D', they are different commit objects.
+
+So the answer to your question is that the v0.9 tag will always point to the version of D when the tag was first created. So if you've rewritten your history, you will have a tag that points to a commit that is no longer in the tree for your current branch.
+
+If, however, you just mean that someone had committed and pushed to a branch F B G and C before you had pushed B C and D, then what happens will depend on whether you do a merge or a rebase when you do the required pull to update your local branch with existing history.
+
+Default would be to merge. This would make your graph look like this:
+```
+A-F-B-G-C
+ \       \
+  B-C-D---M
+```
+Where your branch head would point to M and the B and C in each branch of the tree would be different (even if you both cherry-picked the same commits from somewhere else).
+
+# UPDATE
+
+## tl;dr:
+
+ * who committed first (timing) doesn't matter: order depends on the graph(s) and your options to combine and/or alter graphs (merge, rebase, cherry-pick). you decide what the final structure will look like.
+ * commit objects (things tags point to) never change, so your tagged commit won't be updated
+ * since commits don't change, when history is rewritten, you actually have new commit objects even if the diffs are identical. it may look like things are changing but they are actually replaced in the graph with something that looks very similar.
+
