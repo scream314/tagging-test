@@ -1,0 +1,11 @@
+
+
+Like most VCSs, Git has the ability to tag specific points in history as being important. Typically people use this functionality to mark release points (v1.0, and so on). In this section, you’ll learn how to list the available tags, how to create new tags, and what the different types of tags are.
+Listing Your Tags
+
+Listing the available tags in Git is straightforward. Just type git tag (with optional -l or --list):
+
+$ git tag
+v0.1
+v1.3
+
